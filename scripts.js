@@ -6,6 +6,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const body = document.body;
     let isDarkMode = false;
 
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'light') {
+            setTheme('dark');
+        } else {
+            setTheme('light');
+        }
+    }
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
     function toggleDarkMode() {
         isDarkMode = !isDarkMode;
         document.body.classList.toggle('dark-theme', isDarkMode);
@@ -54,7 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
             this.style.color = 'var(--text-color)';
         });
     });
-
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);})
     document.addEventListener('mousemove', (e) => {
         cursorBackground.style.top = `${e.clientY}px`;
         cursorBackground.style.left = `${e.clientX}px`;
